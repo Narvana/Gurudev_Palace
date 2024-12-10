@@ -1,7 +1,14 @@
+require('dotenv').config();
+
 const admin = require('firebase-admin');
 const { Buffer } = require('buffer');
 const path = require('path');
-var serviceAccount = require("../../../WarehouseServiceAccountKey.json"); // Assuming correct path
+
+// var serviceAccount = require("../../WarehouseServiceAccountKey.json"); // Assuming correct path
+
+// Parse the JSON string from the environment variable
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
