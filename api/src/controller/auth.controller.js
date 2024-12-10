@@ -7,11 +7,11 @@ const jwt=require('jsonwebtoken')
 const ApiError=require('../utils/ApiResponse/ApiError');
 const ApiSuccess=require('../utils/ApiResponse/ApiSuccess');
 
-const generateAccessToken=require('../utils/middleware/token/generateAccessToken');
+const generateAccessToken=require('../utils/token/generateAccessToken');
 
 // const generateRefreshToken=require('../utils/middleware/token/generateRefreshToken');
 
-const validatePassword=require('../utils/middleware/passwordValidation');
+const validatePassword=require('../utils/passwordValidation');
 
 const Auth = require('../model/auth.model');
 
