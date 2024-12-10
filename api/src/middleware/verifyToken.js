@@ -1,7 +1,7 @@
 // require('dotenv').config();
 const jwt=require('jsonwebtoken');
-// const secretKey=process.env.SECRET
-const ApiError=require('../../ApiResponse/ApiError');
+const secretKey=process.env.SECRET
+const ApiError=require('../utils/ApiResponse/ApiError');
 
 // const verify=(req,res,next)=>{
 //     // const authHeader = req.headers['authorization'];
@@ -43,7 +43,7 @@ const verify = (role=[]) => {
             }
 
             // Verify the token
-            jwt.verify(token, 'k95k9878vomaacw8qk4pbxkme0yihht-dl4pic5dtmj099dz89mklrohvs522rsxej', (err, user) => 
+            jwt.verify(token,secretKey, (err, user) => 
             {
                 if (err) {
                     if (err.name === 'TokenExpiredError') {
