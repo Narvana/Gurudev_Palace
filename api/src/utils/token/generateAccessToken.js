@@ -1,5 +1,6 @@
 const jwt=require('jsonwebtoken');
-const Auth = require('../../../model/auth.model');
+const Auth = require('../../model/auth.model');
+const secretKey=process.env.SECRET;
 // const ApiError=require('../../ApiResponse/ApiError');
 
 const generateAccessToken=async(id)=>{
@@ -19,7 +20,7 @@ const generateAccessToken=async(id)=>{
                     lastname: user.lastname,
                     email: user.email,
                 },
-                'k95k9878vomaacw8qk4pbxkme0yihht-dl4pic5dtmj099dz89mklrohvs522rsxej',
+                secretKey,
                 { expiresIn: '1d' }
             );    
             return accessToken;
