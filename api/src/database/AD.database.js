@@ -3,7 +3,11 @@ require('dotenv').config()
 
 const uri=process.env.URI
  
-mongoose.connect(uri)
+mongoose.connect(uri,{
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 60000, // 30 seconds
+})
 .then(()=>{
     console.log('Connection Successfull with MongoDB')
 })
