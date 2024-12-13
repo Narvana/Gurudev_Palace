@@ -4,8 +4,8 @@ require('dotenv').config()
 const uri=process.env.URI
  
 mongoose.connect(uri,{
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 60000, // 30 seconds
 })
 .then(()=>{
