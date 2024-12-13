@@ -13,7 +13,15 @@ const guestSchema= new mongoose.Schema(
         },
         GuestIdentity:{
             type:String,
+            enum: {
+                values: ['AADHAR','PANCARD','DL','PASSPORT'],
+                message: '{VALUE} is not a valid for Guest Identity.'
+            },  
             required:[true,'Guest Identity is required']
+        },
+        IdentityNo:{
+            type:String,
+            required:[true,'Identity Number is required']
         }
     }
 )
