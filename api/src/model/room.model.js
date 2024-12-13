@@ -11,10 +11,23 @@ const roomSchema=new mongoose.Schema(
             },  
             required:[true,'Property Field is required'],
         },
-        roomType:{
-            type:String,
-            required:[true,'Room Type is required'],
-        },    
+        roomType: {
+            type: String,
+            required: [true, 'Room Type is required'],
+            validate: {
+                validator: function (value) {
+                    if (this.property === 'PALACE') {
+                        return ['DELUX', 'STANDARD'].includes(value);
+                    } else if (this.property === 'KUNJ') {
+                        return ['SUITE', 'ROOM'].includes(value);
+                    }
+                    return false; // Invalid property value
+                },
+                message: function (props) {
+                    return `${props.value} is not a valid Room Type for the selected property.`;
+                },
+            },
+        }, 
         roomSize:{
             type:String,
             required:[true,'Room Size is required'],
@@ -50,7 +63,8 @@ const roomSchema=new mongoose.Schema(
         },
 })
 
-roomSchema.index({ property: 1, roomNum: 1 }, { unique: true });
+// roomSchema.index({ property: 1, roomNum: 1 }, { unique: true });
+
 
 const Room= mongoose.model('Room',roomSchema)
 
