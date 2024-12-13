@@ -9,7 +9,7 @@ const {uploadToFirebase} = require('../middleware/ImageUpload/firebaseConfig');
 
 const addRoom=async(req,res,next)=>{    
 
-    const 
+    const
     {
         property,roomType,roomSize,roomNum,guestsNum,roomPrice, roomDiscountPrice, roomAvalibility,roomAmenities
     } = req.body;
@@ -83,15 +83,25 @@ const addRoom=async(req,res,next)=>{
 
 const getRoom = async(req,res,next)=>{
    
-    const {property}=req.query;
+    const {property,roomType}=req.query;
     let searchCondition={}
 
+    if(roomType && property)
+    {
+        searchCondition['property']=property;
+        searchCondition['roomType']=roomType;
+    }
+    if(roomType && !property)
+    {
+        return next(ApiError(400,'Please select property first'));
+    }
     if(property)
     {
         searchCondition['property']=property;
     }
 
-    console.log(searchCondition);
+
+    // console.log(searchCondition);
     
 
     try {
