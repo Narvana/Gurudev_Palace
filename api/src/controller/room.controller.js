@@ -82,16 +82,31 @@ const addRoom=async(req,res,next)=>{
 }
 
 const getRoom = async(req,res,next)=>{
+   
+    const {property}=req.query;
+    let searchCondition={}
+
+    if(property)
+    {
+        searchCondition['property']=property;
+    }
+
+    console.log(searchCondition);
+    
+
     try {
-        
-        const Rooms=await Room.find();
+            const Rooms=await Room.aggregate([
+                {
+                    $match: searchCondition
+                }
+            ]);
 
-        if(Rooms.length === 0)
-        {
-            return next(ApiError(400,'No Room Found'));
-        }
+            if(Rooms.length === 0)
+            {
+                return next(ApiError(400,'No Room Found'));
+            }
 
-        return next(ApiSuccess(201,Rooms,'Total Rooms'));
+            return next(ApiSuccess(201,Rooms,'Total Rooms'));
         
     } catch (error) {
         console.log({
