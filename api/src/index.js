@@ -12,6 +12,7 @@ const cookieParser=require('cookie-parser')
 
 const roomRoute=require('./routes/room.router');
 const authRoute=require('./routes/auth.router');
+const roomBookRoute= require('./routes/roomBook.router');
 
 const mongoose = require('mongoose');
 const multer=require('multer');
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // app.use('/api/user',userRoute)
 app.use('/api/auth',authRoute);
 app.use('/api/Room',roomRoute);
+app.use('/api/Room',roomBookRoute);
 
 app.use((err, req, res, next) => {
     if (err instanceof multer.MulterError) 
