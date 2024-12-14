@@ -229,9 +229,41 @@ const deleteRoom = async(req,res,next) => {
     }
 }
 
+const RoomData = async(req,res,next)=>{
+    try {
+        const PalaceRoom = await Room.find({property:'PALACE'});
+        const KunjRoom = await Room.find({property:'KUNJ'});
+        const PalaceRoomBooked = await Room.find({property:'PALACE',roomAvalibility:false});
+        const KunjRoomBooked = await Room.find({property:'KUNJ',roomAvalibility:false});        
+
+        const totalRoom= PalaceRoom.length + KunjRoom.length;
+        return next(ApiSuccess(
+            200,
+            {
+                totalRoom,
+                'PalaceRoom':PalaceRoom.length,
+                'KunjRoom':KunjRoom.length,
+                'PalaceRoomBooked':PalaceRoomBooked.length,
+                'KunjRoomBooked':KunjRoomBooked.length
+            },
+            'Room Data'
+        ))
+    } catch (error) {
+
+        console.log({
+            'Internal Serve Error, ' : error.message,
+            error
+            });
+            
+        // Default error
+        return next(ApiError(500, `Internal Server Error: ${error.message}`));
+    }
+}
+
 module.exports={
     addRoom,
     getRoom,
     updateRoom,
-    deleteRoom
+    deleteRoom,
+    RoomData
 }
