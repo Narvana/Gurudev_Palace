@@ -22,7 +22,7 @@ const guestSchema= new mongoose.Schema(
         IdentityNo:{
             type:String,
             required:[true,'Identity Number is required']
-        }
+        }       
     }
 )
 
@@ -41,13 +41,31 @@ const RoomBookSchema=new mongoose.Schema(
             type:String,
             required:[true,'Booking Contact is required'],
         },
-        CheckIn:{
+       CheckIn: {
             type: Date,
-            required:[true,'Check In Time is required']
+            required: [true, 'Check In Time is required'],
+            validate: {
+                validator: function (value) {
+                    // Ensure CheckIn date is not in the past
+                    return value >= new Date();
+                },
+                message: 'Check In date must be today or a future date.',
+            },
         },
         CheckOut:{
             type: Date,
-            required:[true,'Check Out Time is required']
+            required:[true,'Check Out Time is required'],
+            validate: {
+                    validator: function (value) {
+                        // Check if CheckIn date is before CheckOut date
+                        return this.CheckIn < value;
+                    },
+                    message: 'CheckOut date must be later than CheckIn date',
+                },        
+        },
+        OldData:{
+            type:Boolean,
+            default:false
         },
         // amount:{}
         payment:{
